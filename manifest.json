@@ -16,6 +16,9 @@
       "js": ["popup.js"]
     }
   ],
+  "icons": { "16": "static/icons/icon16.png",
+           "48": "static/icons/icon48.png",
+          "128": "static/icons/icon128.png" },
   "permissions": [
     "tabs",
     "cookies",
