@@ -1,5 +1,5 @@
-# Sessionize
-![alt text](https://github.com/voshawn/sessionize-cafe/blob/master/assets/static/images/sessionize.png?raw=true)
+![Sessionize](https://github.com/voshawn/sessionize-cafe/blob/master/assets/static/images/sessionize.png?raw=true)
+
 A Chrome extension to let you share your browser session with others.
 
 *ONLY SHARE WITH PEOPLE YOU TRUST*
