@@ -1,3 +1,21 @@
+// MESSAGE LISTENERS
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    const {message, payload } = request
+    if( message === "SET_SESSION" ) {
+      deleteAllCookies(payload.url, (_url, _cookies) => {})
+      setTimeout(function(){
+        // Hacky timeout function
+        setAllCookies(payload.url, payload.data, (url, _cookies) => {
+          chrome.tabs.update(sender.tab.id, {url: url})
+        })
+      }, 1000);
+    }
+  }
+);
+
+// COOKIES FUNCTIONS
 
 function getAllCookies(url, callback) {
  chrome.cookies.getAll(

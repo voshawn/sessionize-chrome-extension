@@ -1,19 +1,54 @@
 <!doctype html>
 <html>
+  <head>
+    <link href="css/bulma.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+  </head>
   <body>
-    <h1>Sessionizer</h1>
-    url:<br>
-    <textarea id="urlText" rows="1" cols="60"></textarea>
-    <br><br>
-    Current:<br>
-    <textarea id="currentText" rows="15" cols="60"></textarea>
-    <button type="button" id="getCookiesBtn">Get Cookies</button>
-    <br><br>
-    New:<br>
-    <textarea id="newText" rows="15" cols="60"></textarea>
-    <button type="button" id="deleteCookiesBtn" >Delete Cookies</button>
-    <button type="button" id="setCookiesBtn" >Set Cookies</button>
+    <div class="popup">
+    <div>
+    <h1 class="subtitle has-text-centered">SESSIONIZE</h1>
+    </div>
+    <div class="tabs is-small is-fullwidth" id="tabs">
+      <ul>
+        <li class="is-active" data-tab="1">
+          <a>
+            <span>Simple</span>
+          </a>
+        </li>
+        <li data-tab="2">
+          <a>
+            <span>Advanced</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div id="tab-content" class="container">
+      <section class="is-active" data-content="1">
+        <input class="input" id="shareUrlText"
+          placeholder="Click 'Share Session' to generate URL">
+        </input>
+        <p id="clipboardHint" class="has-text-centered has-text-dark is-size-7"> 
+        </p>
+        <br>
+        <button class="button is-link" type="button" id="shareSessionBtn">Share Session</button>
+      </section>
+      <section data-content="2">
+        URL:<br>
+        <textarea id="urlText" rows="1" cols="60"></textarea>
+        <br><br>
+        CURRENT:<br>
+        <textarea id="currentText" rows="15" cols="60"></textarea>
+        <button class="button is-link" type="button" id="getCookiesBtn">Get Cookies</button>
+        <br><br>
+        NEW:<br>
+        <textarea id="newText" rows="15" cols="60"></textarea>
+        <button class="button is-danger"type="button" id="deleteCookiesBtn" >Delete Cookies</button>
+        <button class="button is-link" type="button" id="setCookiesBtn" >Set Cookies</button>
+      </section>
+    </div>
 
     <script type="text/javascript" src="popup.js"></script>
+    </div>
   </body>
 </html>

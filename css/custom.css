@@ -1,0 +1,12 @@
+#tab-content section {
+  display: none;
+}
+
+#tab-content section.is-active {
+  display: block;
+}
+
+.popup {
+  width: 400px;
+  padding: 10px;
+}
