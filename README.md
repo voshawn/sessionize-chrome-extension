@@ -1,1 +1,0 @@
-# sessionize-chrome-extension
