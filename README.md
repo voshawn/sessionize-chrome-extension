@@ -13,4 +13,4 @@ A Chrome extension to let you share your browser session with others.
 ## How to get it running
 1. Pull Repo (or download Zip)
 2. In Chrome, enter `chrome://extensions/` and turn on `Developer mode`
-3. Select `Load Unpacked` and navigate to the directory of the repo.
+3. Select `Load Unpacked` and load the `extension` directory of the repo.
