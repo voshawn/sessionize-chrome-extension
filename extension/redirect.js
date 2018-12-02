@@ -1,13 +1,9 @@
 const urlParams = new URLSearchParams(window.location.search)
-const code = urlParams.get('id')
+const iv = urlParams.get('iv')
+const ct = urlParams.get('ct')
 
-const setCookiesTwo = (url, cookies, redirect) => {
-  console.log(cookies)
-  const bkg = chrome.extension.getBackgroundPage()
-  bkg.setAllCookies(url, cookies, redirect)
-}
-const triggerAlert = async code => {
-  response = await getSession(code)
+const triggerAlert = async (iv, ct) => {
+  response = await getSession(iv, ct)
   if (response.data.url) {
     conf = confirm(`Accept session for: \n${response.data.url}`)
     if (conf) {
@@ -28,8 +24,8 @@ const redirect = (url, _cookies) => {
   console.log("redirect", url)
 }
 
-if (code) {
-  triggerAlert(code)
+if (iv && ct) {
+  triggerAlert(iv, ct)
 }
 
 

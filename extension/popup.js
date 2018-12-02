@@ -2,10 +2,12 @@
 const BASE_URL = "https://arcane-cliffs-33953.herokuapp.com"
 const SHARE_URL = "http://www.sessionize.me"
 
+//const BASE_URL = "http://localhost:4000"
+//const SHARE_URL = "http://localhost:4000"
 // APIs
 
-const getSession = async code => {
-  const response = await fetch(`${BASE_URL}/api/session?code=${code}`, {
+const getSession = async (iv, ct) => {
+  const response = await fetch(`${BASE_URL}/api/session?iv=${iv}&ct=${ct}`, {
     method: "GET",
     mode: "cors",
     headers: {"Content-Type": "application/json; charset=utf-8"},
@@ -58,7 +60,7 @@ const sendSession = async (url, json) => {
     data: json,
   }
   response = await postSession(payload)
-  shareUrl = `${SHARE_URL}/code/?id=${response.data}`
+  shareUrl = `${SHARE_URL}/code/?iv=${response.data.iv}&ct=${response.data.ct}`
   textField = document.getElementById("shareUrlText")
   textField.value = shareUrl
   textField.select()
