@@ -1,5 +1,5 @@
 // CONSTANTS
-const BASE_URL = "https://arcane-cliffs-33953.herokuapp.com"
+const BASE_URL = "https://sessionize-me.herokuapp.com"
 const SHARE_URL = "http://www.sessionize.me"
 
 //const BASE_URL = "http://localhost:4000"
