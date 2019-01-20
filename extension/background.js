@@ -7,9 +7,11 @@ chrome.runtime.onMessage.addListener(
         deleteAllCookies(payload.url)
         setTimeout(function(){
           // TODO: Fix Hacky timeout function
-          setAllCookies(payload, (newPayload) => {
-            chrome.tabs.update(sender.tab.id, {url: newPayload.url})
-            sendSetLocalStorageMessage(payload)
+          setAllCookies(payload, () => {
+            chrome.tabs.update(sender.tab.id, {url: payload.url})
+            setTimeout(function(){
+              sendSetLocalStorageMessage(payload)
+            }, 5000);
           })
         }, 1000);
         break;
@@ -73,7 +75,7 @@ function getAllCookies(payload, callback) {
 
 function setAllCookies({url, cookies}, callback) {
   cookies.map(cookie => {setCookie(url, cookie)})
-  getAllCookies({url:url}, callback)
+  callback()
 }
 
 function deleteAllCookies(url) {
