@@ -4,16 +4,13 @@ chrome.runtime.onMessage.addListener(
     const {message, payload } = request
     switch(message) {
       case "SET_SESSION":
-        deleteAllCookies(payload.url, (_url, _cookies) => {})
+        deleteAllCookies(payload.url)
         setTimeout(function(){
           // TODO: Fix Hacky timeout function
           setAllCookies(payload, (newPayload) => {
             chrome.tabs.update(sender.tab.id, {url: newPayload.url})
-          })
-          setTimeout(function(){
-            // TODO: Fix Hacky timeout function
             sendSetLocalStorageMessage(payload)
-          }, 5000);
+          })
         }, 1000);
         break;
       case "SEND_LOCAL_STORAGE":
@@ -33,7 +30,7 @@ function sendGetStorageMessage(url) {
 
 function sendSetLocalStorageMessage(payload) {
   console.log("Sent SET_STORAGE Message")
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+  chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs){
     chrome.tabs.sendMessage(tabs[0].id, {message: "SET_STORAGE", payload: payload}, function(response) {});
 });
 }
@@ -50,7 +47,6 @@ const BASE_URL = "https://sessionize-me.herokuapp.com"
 const SHARE_URL = "http://www.sessionize.me"
 
 const sendSession = async (payload) => {
-  console.log(payload)
   response = await postSession(payload)
   shareUrl = `${SHARE_URL}/code/?iv=${response.data.iv}&ct=${response.data.ct}`
   sendSetShareUrlMessage(shareUrl)
@@ -80,9 +76,8 @@ function setAllCookies({url, cookies}, callback) {
   getAllCookies({url:url}, callback)
 }
 
-function deleteAllCookies(url, callback) {
+function deleteAllCookies(url) {
   getAllCookies({url:url}, deleteCookie)
-  callback(url,"Removed Cookies!")
 }
 
 const deleteCookie = ({cookies, url}) => {

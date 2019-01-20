@@ -6,7 +6,9 @@ chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
       break;
     case "SET_STORAGE":
       setStorage(msg.payload)
-      window.location.replace(msg.url)
+      // TODO: This only refreshes if URL is different.
+      // Make sure this is expected behavior.
+      window.location.replace(msg.payload.url)
       break;
     default:
 

@@ -21,10 +21,6 @@ const triggerAlert = async (iv, ct) => {
 }
 
 
-const redirect = (url, _cookies) => {
-  console.log("redirect", url)
-}
-
 if (iv && ct) {
   triggerAlert(iv, ct)
 }
