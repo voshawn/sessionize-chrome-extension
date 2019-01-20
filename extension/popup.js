@@ -1,32 +1,10 @@
-// CONSTANTS
-const BASE_URL = "https://sessionize-me.herokuapp.com"
 const SHARE_URL = "http://www.sessionize.me"
-
-//const BASE_URL = "http://localhost:4000"
-//const SHARE_URL = "http://localhost:4000"
-// APIs
-
-const getSession = async (iv, ct) => {
-  const response = await fetch(`${BASE_URL}/api/session?iv=${iv}&ct=${ct}`, {
-    method: "GET",
-    mode: "cors",
-    headers: {"Content-Type": "application/json; charset=utf-8"},
-  })
-  return response.json();
-}
-
-const postSession = async data => {
-  const response = await fetch(`${BASE_URL}/api/session`, {
-    method: "POST",
-    mode: "cors",
-    headers: {"Content-Type": "application/json; charset=utf-8"},
-    body: JSON.stringify(data)
-  })
-  return response.json();
-}
-
-
 // BUTTON ACTIONS
+const testShareSession = () => {
+  const url = document.getElementById("urlText").value
+  const bkg = chrome.extension.getBackgroundPage()
+  bkg.sendGetStorageMessage(url)
+}
 
 const shareSession = () => {
   const url = document.getElementById("urlText").value
@@ -55,11 +33,12 @@ const setCookies = () => {
 // CALLBACKS
 
 const sendSession = async (url, json) => {
+  const bkg = chrome.extension.getBackgroundPage()
   payload = {
     url,
     data: json,
   }
-  response = await postSession(payload)
+  response = await bkg.postSession(payload)
   shareUrl = `${SHARE_URL}/code/?iv=${response.data.iv}&ct=${response.data.ct}`
   textField = document.getElementById("shareUrlText")
   textField.value = shareUrl
@@ -80,6 +59,7 @@ const setNewText = (_url, json) => {
 
 // POPUP SPECIFIC EVENT LISTENERS
 
+document.getElementById('testShareSessionBtn').addEventListener('click', testShareSession);
 document.getElementById('shareSessionBtn').addEventListener('click', shareSession);
 document.getElementById('getCookiesBtn').addEventListener('click', getCookies);
 document.getElementById('setCookiesBtn').addEventListener('click', setCookies);

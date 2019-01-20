@@ -2,7 +2,7 @@
  "manifest_version": 2,
  "name": "Sessionize",
  "description": "Send your browser session to someone else.",
- "version": "0.1.6",
+ "version": "0.1.7",
  "author": "Shawn Vo",
  "background": {
     "scripts": ["background.js"]
@@ -17,7 +17,14 @@
         "https://sessionize-me.herokuapp.com/code*",
         "http://www.sessionize.me/code*"
       ],
-      "js": ["popup.js", "redirect.js"]
+      "js": ["redirect.js"]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": ["content.js"]
     }
   ],
   "icons": { "16": "static/icons/icon16.png",

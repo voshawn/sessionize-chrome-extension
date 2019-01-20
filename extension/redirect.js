@@ -1,3 +1,4 @@
+const BASE_URL = "https://sessionize-me.herokuapp.com"
 const urlParams = new URLSearchParams(window.location.search)
 const iv = urlParams.get('iv')
 const ct = urlParams.get('ct')
@@ -28,4 +29,12 @@ if (iv && ct) {
   triggerAlert(iv, ct)
 }
 
-
+// TODO: Refactor this into background
+async function getSession (iv, ct) {
+  const response = await fetch(`${BASE_URL}/api/session?iv=${iv}&ct=${ct}`, {
+    method: "GET",
+    mode: "cors",
+    headers: {"Content-Type": "application/json; charset=utf-8"},
+  })
+  return response.json();
+}
