@@ -18,6 +18,7 @@ chrome.runtime.onMessage.addListener(
         break;
       case "SEND_LOCAL_STORAGE":
         getAllCookies(payload, sendSession)
+        break;
       default:
     }
   }
@@ -37,7 +38,11 @@ function sendSetLocalStorageMessage(payload) {
 });
 }
 function sendSetShareUrlMessage(shareUrl) {
-  console.log(shareUrl)
+  request = {
+    message: "SET_SHARE_URL",
+    payload: shareUrl
+  }
+  chrome.runtime.sendMessage(request);
 }
 
 // API

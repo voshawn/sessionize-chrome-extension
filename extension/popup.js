@@ -1,15 +1,22 @@
 const SHARE_URL = "http://www.sessionize.me"
-// BUTTON ACTIONS
-const testShareSession = () => {
-  const url = document.getElementById("urlText").value
-  const bkg = chrome.extension.getBackgroundPage()
-  bkg.sendGetStorageMessage(url)
-}
+// MESSAGE LISTENERS
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    const {message, payload } = request
+    switch(message) {
+      case "SET_SHARE_URL":
+        updateShareUrl(payload)
+        break;
+      default:
+    }
+  }
+);
 
+// BUTTON ACTIONS
 const shareSession = () => {
   const url = document.getElementById("urlText").value
   const bkg = chrome.extension.getBackgroundPage()
-  bkg.getAllCookies(url, sendSession)
+  bkg.sendGetStorageMessage(url)
 }
 
 const getCookies = () => {
@@ -29,17 +36,7 @@ const setCookies = () => {
   bkg.setAllCookies(url, newCookies, setNewText)
 }
 
-
-// CALLBACKS
-
-const sendSession = async (url, json) => {
-  const bkg = chrome.extension.getBackgroundPage()
-  payload = {
-    url,
-    data: json,
-  }
-  response = await bkg.postSession(payload)
-  shareUrl = `${SHARE_URL}/code/?iv=${response.data.iv}&ct=${response.data.ct}`
+const updateShareUrl = shareUrl => {
   textField = document.getElementById("shareUrlText")
   textField.value = shareUrl
   textField.select()
@@ -47,6 +44,7 @@ const sendSession = async (url, json) => {
   document.getElementById("clipboardHint").innerHTML = "Copied to Clipboard!"
 }
 
+// CALLBACKS
 const setCurrentText = (_url, json) => {
   text = JSON.stringify(json)
   document.getElementById("currentText").value = text
@@ -59,7 +57,6 @@ const setNewText = (_url, json) => {
 
 // POPUP SPECIFIC EVENT LISTENERS
 
-document.getElementById('testShareSessionBtn').addEventListener('click', testShareSession);
 document.getElementById('shareSessionBtn').addEventListener('click', shareSession);
 document.getElementById('getCookiesBtn').addEventListener('click', getCookies);
 document.getElementById('setCookiesBtn').addEventListener('click', setCookies);
